@@ -17,26 +17,31 @@ async function getQuotes() {
 };
 
 // Randomize Quote Function
-const randomizeQuote = (quoteSelector, authorSelector) => {
+const randomizeQuote = () => {
   const randomIndex = Math.floor(Math.random() * apiQuotes.length);
   const randomQuote = apiQuotes[randomIndex].text;
   const randomAuthor = apiQuotes[randomIndex].author;
   
+  // Text Selectors
+  const quoteSelector = document.querySelector('#quote');
+  const authorSelector = document.querySelector('#author');
+
   // Change quotes
-  document.querySelector(quoteSelector).textContent = randomQuote;
-  document.querySelector(authorSelector).textContent = randomAuthor;
+  quoteSelector.textContent = randomQuote;
+  authorSelector.textContent = randomAuthor;
 };
 
 // Tweet the quote
-const tweetQuote = (quoteSelector, authorSelector) => {
-  const quoteText = document.querySelector(quoteSelector);
-  const authorText = document.querySelector(authorSelector);
+const tweetQuote = () => {
+  const quoteText = document.querySelector('#quote').textContent;
+  const authorText = document.querySelector('#author').textContent;
 
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.textContent}   -   ${authorText.textContent}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText}   -   ${authorText}`;
 
   // Open twitter.com
   window.open(twitterUrl, '_blank');
 };
+
 
 // On Load
 getQuotes();
