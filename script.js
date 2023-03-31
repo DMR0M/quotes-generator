@@ -1,6 +1,5 @@
 "use strict";
 
-
 // API data array
 let apiQuotes = [];
 
@@ -17,24 +16,33 @@ async function getQuotes() {
 };
 
 // Randomize Quote Function
-const randomizeQuote = () => {
+const randomizeQuote = (quoteSelector=document.querySelector('#quote'), 
+                        authorSelector=document.querySelector('#author')) => {
   const randomIndex = Math.floor(Math.random() * apiQuotes.length);
   const randomQuote = apiQuotes[randomIndex].text;
   const randomAuthor = apiQuotes[randomIndex].author;
   
-  // Text Selectors
-  const quoteSelector = document.querySelector('#quote');
-  const authorSelector = document.querySelector('#author');
+  const quoteText = document.querySelector('.quote-text')
+  
+  // Check quote length to determine styling
+  if (randomQuote.length > 70) {
+    quoteText.classList.add('long-quote');
+  } else {
+    quoteText.classList.remove('long-quote');
+  }
 
   // Change quotes
   quoteSelector.textContent = randomQuote;
   authorSelector.textContent = randomAuthor;
 };
 
+
+
 // Tweet the quote
-const tweetQuote = () => {
-  const quoteText = document.querySelector('#quote').textContent;
-  const authorText = document.querySelector('#author').textContent;
+const tweetQuote = (quoteSelector=document.querySelector('#quote'), 
+                    authorSelector=document.querySelector('#author')) => {
+  const quoteText = quoteSelector.textContent;
+  const authorText = authorSelector.textContent;
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText}   -   ${authorText}`;
 
